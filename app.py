@@ -152,7 +152,7 @@ def main():
                 else:
                     st.error("Incorrect admin password.")
 
-    # Footer with "Made by Bilal Waseem" and glowing LinkedIn logo
+    # Footer with "Made by Bilal Waseem" and glowing LinkedIn logo (no text)
     st.markdown("""
     <style>
     .footer {
