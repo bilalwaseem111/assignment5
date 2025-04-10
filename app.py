@@ -11,10 +11,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Generate encryption key
-KEY = Fernet.generate_key()
-cipher = Fernet(KEY)
-
 # Session state initialization
 if 'stored_data' not in st.session_state:
     st.session_state.stored_data = {}
@@ -28,40 +24,12 @@ if 'authenticated' not in st.session_state:
 if 'selected_menu' not in st.session_state:
     st.session_state.selected_menu = "Home"  # Default selection
 
-st.markdown("""
-<style>
-    .main {
-        background-color: #0E1117;
-    }
-    .sidebar .sidebar-content {
-        background-color: #1a1a2e;
-    }
-    .stTextInput input, .stTextArea textarea {
-        background-color: #16213E !important;
-        color: white !important;
-        caret-color: white !important;
-    }
-    .stTextInput input::placeholder, .stTextArea textarea::placeholder {
-        color: #cccccc !important;
-        opacity: 1 !important;
-    }
-    .stButton button {
-        background-color: #4CAF50 !important;
-        color: white !important;
-        border: none;
-        padding: 10px 24px;
-        text-align: center;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 8px;
-    }
-    .stButton button:hover {
-        background-color: #45a049 !important;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Instead of generating a new key every time, store a fixed key or generate one and use it for both encryption and decryption.
+if 'key' not in st.session_state:
+    # You can either store this key securely or generate one and use it for both encryption and decryption.
+    st.session_state.key = Fernet.generate_key()
 
+cipher = Fernet(st.session_state.key)
 
 # Hash function
 def hash_passkey(passkey):
@@ -77,7 +45,13 @@ def decrypt_data(encrypted_text, passkey):
     for key, value in st.session_state.stored_data.items():
         if value["encrypted_text"] == encrypted_text and value["passkey"] == hashed_passkey:
             st.session_state.failed_attempts = 0
-            return cipher.decrypt(encrypted_text.encode()).decode()
+            # Use the stored key for decryption
+            cipher = Fernet(value["key"])  # This assumes you store the key with the encrypted data
+            try:
+                return cipher.decrypt(encrypted_text.encode()).decode()
+            except Exception as e:
+                st.error(f"Decryption failed. Error: {str(e)}")
+                return None
     st.session_state.failed_attempts += 1
     return None
 
@@ -133,7 +107,7 @@ def main():
                         time.sleep(1)
                         hashed = hash_passkey(passkey)
                         encrypted = encrypt_data(user_data, passkey)
-                        st.session_state.stored_data[encrypted] = {"encrypted_text": encrypted, "passkey": hashed}
+                        st.session_state.stored_data[encrypted] = {"encrypted_text": encrypted, "passkey": hashed, "key": st.session_state.key}
                         st.success("Data encrypted and stored successfully.")
                         st.code(encrypted, language="text")
                         st.warning("Copy and save this encrypted text and passkey. You'll need both.")
