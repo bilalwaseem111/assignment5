@@ -154,5 +154,37 @@ def main():
                 else:
                     st.error("Incorrect admin password.")
 
+    # Footer with glowing LinkedIn logo and "Made by Bilal Waseem"
+    st.markdown("""
+    <style>
+    .footer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        background-color: #333;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .linkedin-logo {
+        margin-left: 10px;
+        width: 30px;
+        height: 30px;
+        transition: transform 0.3s ease;
+    }
+    .linkedin-logo:hover {
+        transform: scale(1.2);
+        filter: drop-shadow(0 0 10px rgba(0, 0, 255, 0.7));
+    }
+    </style>
+    <div class="footer">
+        <span>Made by Bilal Waseem</span>
+        <a href="https://www.linkedin.com/in/bilal-waseem-b44006338" target="_blank">
+            <img class="linkedin-logo" src="https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo_2023.png" alt="LinkedIn Logo"/>
+        </a>
+    </div>
+    """, unsafe_allow_html=True)
+
 if __name__ == "__main__":
     main()
