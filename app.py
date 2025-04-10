@@ -60,12 +60,10 @@ def main():
     with st.sidebar:
         st.title("Secure Vault")
 
-        # Dynamically set text color based on selected menu
-        sidebar_text_color = "black" if st.session_state.get("selected_menu") == "Store Data" else "white"
-        
-        st.markdown(f"""
+        # Black text for the description
+        st.markdown("""
             <div style='background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;'>
-                <p style='color: {sidebar_text_color};'>Store and retrieve your sensitive data securely using encryption.</p>
+                <p style='color: black;'>Store and retrieve your sensitive data securely using encryption.</p>
             </div>
         """, unsafe_allow_html=True)
 
@@ -77,7 +75,7 @@ def main():
         col1, col2 = st.columns([2, 1])
         with col1:
             st.title("Secure Data Encryption System")
-            st.markdown("""
+            st.markdown(""" 
                 <div style='background-color: rgba(30, 136, 229, 0.2); padding: 20px; border-radius: 10px;'>
                     <h3 style='color: #1e88e5;'>Your Personal Digital Safe</h3>
                     <p>Store sensitive information with encryption and retrieve it using your secret passkey.</p>
@@ -85,7 +83,7 @@ def main():
                 </div>
             """, unsafe_allow_html=True)
             st.markdown("### Features:")
-            st.markdown("""
+            st.markdown(""" 
                 - Store Data: Encrypt your information with a passkey.
                 - Retrieve Data: Decrypt only with the correct passkey.
                 - Security: After 3 failed attempts, system locks down.
@@ -100,7 +98,7 @@ def main():
         col1, col2 = st.columns([3, 1])
         with col1:
             user_data = st.text_area("Enter Data", height=150, placeholder="Paste your sensitive information here...")
-            passkey = st.text_input("Create Passkey", type="password", help="You’ll need this passkey to retrieve your data.")
+            passkey = st.text_input("Create Passkey", type="password", help="You'll need this passkey to retrieve your data.")
             if st.button("Encrypt & Store", key="store_btn"):
                 if user_data and passkey:
                     with st.spinner("Encrypting..."):
@@ -154,7 +152,7 @@ def main():
                 else:
                     st.error("Incorrect admin password.")
 
-    # Footer with glowing LinkedIn logo and "Made by Bilal Waseem"
+    # Footer with "Made by Bilal Waseem" and glowing LinkedIn logo
     st.markdown("""
     <style>
     .footer {
@@ -168,20 +166,29 @@ def main():
         font-weight: bold;
     }
     .linkedin-logo {
-        margin-left: 10px;
         width: 30px;
         height: 30px;
-        transition: transform 0.3s ease;
+        margin-left: 10px;
+        transition: all 0.3s ease;
     }
     .linkedin-logo:hover {
         transform: scale(1.2);
-        filter: drop-shadow(0 0 10px rgba(0, 0, 255, 0.7));
+        filter: drop-shadow(0 0 10px #0077B5);
+        animation: glow 1.5s infinite alternate;
+    }
+    @keyframes glow {
+        from {
+            filter: drop-shadow(0 0 5px #0077B5);
+        }
+        to {
+            filter: drop-shadow(0 0 15px #0077B5);
+        }
     }
     </style>
     <div class="footer">
         <span>Made by Bilal Waseem</span>
         <a href="https://www.linkedin.com/in/bilal-waseem-b44006338" target="_blank">
-            <img class="linkedin-logo" src="https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo_2023.png" alt="LinkedIn Logo"/>
+            <img class="linkedin-logo" src="https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo_2023.png" alt="LinkedIn"/>
         </a>
     </div>
     """, unsafe_allow_html=True)
