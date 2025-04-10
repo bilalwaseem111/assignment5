@@ -25,6 +25,9 @@ if 'failed_attempts' not in st.session_state:
 if 'authenticated' not in st.session_state:
     st.session_state.authenticated = False
 
+if 'selected_menu' not in st.session_state:
+    st.session_state.selected_menu = "Home"  # Default selection
+
 st.markdown("""
 <style>
     .main {
@@ -82,14 +85,19 @@ def decrypt_data(encrypted_text, passkey):
 def main():
     with st.sidebar:
         st.title("Secure Vault")
-        st.markdown("""
+
+        # Dynamically set text color based on selected menu
+        sidebar_text_color = "black" if st.session_state.get("selected_menu") == "Store Data" else "white"
+        
+        st.markdown(f"""
             <div style='background-color: rgba(255,255,255,0.1); padding: 10px; border-radius: 10px;'>
-                <p style='color: white;'>Store and retrieve your sensitive data securely using encryption.</p>
+                <p style='color: {sidebar_text_color};'>Store and retrieve your sensitive data securely using encryption.</p>
             </div>
         """, unsafe_allow_html=True)
-        
+
         menu = ["Home", "Store Data", "Retrieve Data", "Login"]
         choice = st.radio("Navigation", menu, index=0 if not st.session_state.failed_attempts >= 3 else 3)
+        st.session_state.selected_menu = choice
 
     if choice == "Home":
         col1, col2 = st.columns([2, 1])
