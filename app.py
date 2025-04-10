@@ -2,6 +2,7 @@ import streamlit as st  # type: ignore
 import hashlib
 from cryptography.fernet import Fernet  # type: ignore
 import time
+import os
 
 # Set page config at the top
 st.set_page_config(
@@ -152,7 +153,7 @@ def main():
                 else:
                     st.error("Incorrect admin password.")
 
-    # Footer with "Made by Bilal Waseem" and glowing LinkedIn logo (no text)
+    # Footer with "Made by Bilal Waseem" and local LinkedIn logo image
     st.markdown("""
     <style>
     .footer {
@@ -188,7 +189,7 @@ def main():
     <div class="footer">
         <span>Made by Bilal Waseem</span>
         <a href="https://www.linkedin.com/in/bilal-waseem-b44006338" target="_blank">
-            <img class="linkedin-logo" src="https://upload.wikimedia.org/wikipedia/commons/0/01/LinkedIn_Logo_2023.png" alt="LinkedIn"/>
+            <img class="linkedin-logo" src="link.png" alt="LinkedIn"/>
         </a>
     </div>
     """, unsafe_allow_html=True)
