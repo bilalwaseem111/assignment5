@@ -188,9 +188,7 @@ def main():
     </style>
     <div class="footer">
         <span>Made by Bilal Waseem</span>
-        <a href="https://www.linkedin.com/in/bilal-waseem-b44006338" target="_blank">
-           
-        </a>
+        
     </div>
     """, unsafe_allow_html=True)
 
