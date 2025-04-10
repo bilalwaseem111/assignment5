@@ -189,7 +189,7 @@ def main():
     <div class="footer">
         <span>Made by Bilal Waseem</span>
         <a href="https://www.linkedin.com/in/bilal-waseem-b44006338" target="_blank">
-            <img class="linkedin-logo" src="link.png" alt="LinkedIn"/>
+           
         </a>
     </div>
     """, unsafe_allow_html=True)
